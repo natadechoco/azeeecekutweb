@@ -1,0 +1,309 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Untuk Azeee ❤️</title>
+<style>
+:root{
+  box-sizing:border-box;
+  padding-top:env(safe-area-inset-top,0px);
+  padding-bottom:env(safe-area-inset-bottom,0px);
+  --bg:#fff1f4; --card:rgba(255, 255, 255, 0.9); --ink:#3b2530; --muted:#8b6b78;
+  --pink:#e5537b; --pink2:#ff86a8; --line:#ffd7e2;
+}
+@media (prefers-color-scheme:dark){
+  :root:not([data-theme="light"]){
+    --bg:#1b1015; --card:rgba(38, 23, 32, 0.9); --ink:#ffe8ef; --muted:#c99cad;
+    --pink:#ff6f95; --pink2:#ff9fbb; --line:#432835;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#1b1015; --card:rgba(38, 23, 32, 0.9); --ink:#ffe8ef; --muted:#c99cad;
+  --pink:#ff6f95; --pink2:#ff9fbb; --line:#432835;
+}
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;overflow:hidden;}
+
+body{
+  background:var(--bg); color:var(--ink);
+  font-family:"Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  display:flex; align-items:center; justify-content:center;
+  padding:20px; 
+  position:relative;
+}
+
+/* ================= BACKGROUND PHOTO SLIDER ================= */
+.bg-slider-container {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none;
+}
+
+.bg-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.25);
+  backdrop-filter: blur(2px);
+  z-index: 1;
+}
+
+.bg-track {
+  display: flex;
+  width: max-content;
+  height: 100%;
+  animation: scrollBg 35s linear infinite;
+}
+
+.bg-track img {
+  height: 100vh;
+  width: auto;
+  min-width: 300px;
+  object-fit: cover;
+  opacity: 0.65;
+}
+
+@keyframes scrollBg {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+/* ============================================================== */
+
+#stage{
+  width:100%;
+  max-width:560px;
+  position:relative;
+  z-index:2;
+  margin:auto; 
+}
+
+.card{
+  background:var(--card); 
+  backdrop-filter: blur(10px);
+  border:1px solid var(--line);
+  border-radius:24px; padding:32px 24px; text-align:center;
+  box-shadow:0 18px 40px rgba(0, 0, 0, 0.2);
+  max-height: 85vh;    
+  overflow-y: auto;
+  overflow-x: hidden;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.card::-webkit-scrollbar {
+  display: none;
+}
+
+.step{font-size:.78rem;letter-spacing:.14em;text-transform:uppercase;color:var(--muted);margin-bottom:14px}
+h1{font-size:1.5rem;line-height:1.35;margin:0 0 10px}
+p.sub{color:var(--muted);line-height:1.6;margin:0 0 26px;font-size:1rem}
+.btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;position:relative;min-height:56px}
+button{
+  font:inherit;font-weight:700;font-size:1.05rem;border:0;cursor:pointer;
+  padding:14px 30px;border-radius:999px;transition:transform .15s ease;
+}
+.yes{background:linear-gradient(135deg,var(--pink),var(--pink2));color:#fff;box-shadow:0 8px 20px rgba(229,83,123,.38)}
+.yes:hover{transform:scale(1.07)}
+.no{
+  background:var(--card);
+  color:var(--muted);
+  border:1px solid var(--line);
+  box-shadow:0 4px 12px rgba(0,0,0,0.15);
+}
+
+/* KUNCI SUPAYA TOMBOL TERLIHAT DI LUAR CARD */
+.no.run{
+  position:fixed !important;
+  z-index:9999 !important; /* Agar tampil paling depan di atas background dan card */
+  transition:left .2s ease, top .2s ease;
+}
+
+.tease{margin-top:18px;min-height:22px;font-size:.92rem;color:var(--pink);font-weight:600}
+.final h1{font-size:1.7rem}
+.letter{text-align:left;line-height:1.85;color:var(--ink);font-size:1rem;margin:0 0 24px}
+.letter span{color:var(--pink);font-weight:700}
+.heart{position:fixed;font-size:20px;z-index:3;pointer-events:none;animation:up linear forwards}
+@keyframes up{from{transform:translateY(0);opacity:1}to{transform:translateY(-105vh);opacity:0}}
+@media(max-width:420px){h1{font-size:1.3rem}.card{padding:26px 18px}}
+</style>
+</head>
+<body>
+
+<!-- BACKGROUND PHOTO SLIDER -->
+<div class="bg-slider-container">
+  <div class="bg-overlay"></div>
+  <div class="bg-track" id="bgTrack"></div>
+</div>
+
+<div id="stage"></div>
+
+<script>
+const bgPhotos = [
+  "assets/foto1.jpg",
+  "assets/foto2.jpg",
+  "assets/foto3.jpg",
+  "assets/foto4.jpg",
+  "assets/foto5.jpg"
+];
+
+const bgTrack = document.getElementById('bgTrack');
+function setupBgScroller() {
+  const allPhotos = [...bgPhotos, ...bgPhotos];
+  allPhotos.forEach(src => {
+    const img = document.createElement('img');
+    img.src = src;
+    img.alt = "Memory";
+    bgTrack.appendChild(img);
+  });
+}
+setupBgScroller();
+
+const pages=[
+ {t:"Halo Azee… 👋",q:"Boleh aku minjem waktunya Azeee sebentar?",s:"Ada sesuatu yang dari kemaren2 pengen banget aku bilang ke Azeee."},
+ {t:"Halaman 2 💭",q:"Azeee tau nggak?, Azeee tuh sering muncul di pikiran aku tauuuu",s:"Bahkan waktu aku lagi sibuk, senyum Azeee tetap nyelip xixii."},
+ {t:"Halaman 3 🌙",q:"Euummm.... Kalau aku bilang aku sayang  Azeee, Azeee percaya?",s:"ini bukan gombalan yang aku kirim ke banyak orang yaaaa, aku buat website ini khusus buat Azeee<3"},
+ {t:"Halaman 4 ✨",q:"Azeee mau nggak jadi alasan aku buat terus senyum dan semangat tiap hari mweheh?",s:"Aku nggak minta banyak kok, cuma itu."},
+ {t:"Halaman 5 💌",q:"Serius nih… Azeee siap dengar isi hatiku?",s:"Tarik napas dulu yaaaa...., habis ini nggak bisa balik lagi lohhh."}
+];
+const teases=["Ihh… tombolnya kabur 😆","Nggak bisa diklik ya, aku maksa nih 😌","Udah deh, ngaku aja 🙈","Percuma dikejar, tombolnya error 😂","Yaudah klik iyaaaaa aja 💗"];
+const stage=document.getElementById('stage');
+let i=0;
+
+function render(){
+  if(i>=pages.length) return final();
+  const p=pages[i];
+  stage.innerHTML=`<div class="card">
+    <div class="step">${p.t}</div>
+    <h1>${p.q}</h1>
+    <p class="sub">${p.s}</p>
+    <div class="btns">
+      <button class="yes">Iyaaaa terusss 💗</button>
+      <button class="no">Gakkkk</button>
+    </div>
+    <div class="tease"></div>
+  </div>`;
+  
+  setupNoButton();
+}
+
+function setupNoButton(){
+  const no=stage.querySelector('.no'), tease=stage.querySelector('.tease');
+  if(!no) return;
+  let n=0;
+  const flee=e=>{
+    e&&e.preventDefault();
+    const r=no.getBoundingClientRect();
+    if(!no.classList.contains('run')){
+      no.style.width=r.width+'px';
+      no.style.height=r.height+'px';
+      no.classList.add('run');
+      document.body.appendChild(no); // Memindahkan tombol ke elemen body agar tidak terpotong oleh card
+    }
+    const w=innerWidth-r.width-20, h=innerHeight-r.height-20;
+    no.style.left=Math.max(10,Math.random()*w)+'px';
+    no.style.top=Math.max(10,Math.random()*h)+'px';
+    if(tease) tease.textContent=teases[n++%teases.length];
+  };
+  no.addEventListener('mouseover',flee);
+  no.addEventListener('touchstart',flee,{passive:false});
+  no.addEventListener('click',flee);
+  
+  const yesBtn = stage.querySelector('.yes');
+  if(yesBtn){
+    yesBtn.onclick=()=>{
+      if(no.classList.contains('run')) no.remove();
+      burst(14);
+      i++;
+      render();
+    };
+  }
+}
+
+function final(){
+  stage.innerHTML=`<div class="card final">
+    <div class="step">Halaman terakhir 💍</div>
+    <h1>Ini semua dari aku buat Azeee 💖</h1><br><br>
+    <p class="letter">
+      sebelum ke intinya ada sedikit puisi pemanis dari aku, dibaca dulu yaaa<br><br>kebetulan semesta mengembang bersama sejak 13,8 miliar tahun lalu, kebetulan kita ditempatkan di planet yang sama, kebetulan dinosaurus punah karena
+      asteroid yang menabrak bumi, kebetulan leluhurmu selamat dari perang-perang besar hingga melahirkanmu, dan kebetulan aku hidup di tanah serta waktu 
+      yang sama denganmu; maka jika dunia dipenuhi dengan kebetulan, bertemu denganmu adalah kebetulan paling manis dari jutaan kemungkinan yang pernah disusun semesta untukku.
+      <span><3</span>
+    </p>
+    <p class="letter">
+      Dari sekian banyaknya perempuan, cuma Azeee yang bikin aku tertarik dan yang bikin hari biasa jadi terasa
+      <span>istimewa</span>. Aku suka cara Azeee senyum ke aku, cara Azeee cerita hal kecil ke aku, bahkan cara Azeee diam karena
+      lagi capek pas TKA. itu lucu dan keliatan cantik banget. Sebenernya aku udah tau Azeee dari lama pas di lomba PMR tapi aku
+      sempet mikir "pasti udah punya cowo deh kayaknya" mangkanya aku cuman ngeliatin doang dan cuman bisa mengagumi tanpa berkata-kata,
+      kemaren juga aku sempet ragu buat ngedeketin Azeee, aku takut Azeee ngga 
+      ngerespon sesuai dengan ekspetasi, tapi akhirnya aku memberanikan diri buat ngedeketin dan ngungkapin semua ini ke Azeee, 
+      walaupun kemaren agak lucu karena si maul dengan polosnya ngasih nomerku ke Azeee, dan itu buat aku nambah ragu karena rasa 
+      malu yang mungkin keliatan sedikit konyol karena kejadian itu, tapi semua itu akan membuat moment yang mungkin aku gabiisa lupain.<br><br>
+      Mungkin aku nggak janji bisa jadi orang paling sempurna buat Azeee.... Tapi aku janji bakal jadi orang yang
+      <span>paling berusaha buat Azeee dan mentreat Azeee sebaik mungkin</span> — yang selalu dengerin Azeee, yang selalu pulang ke Azeee kalo ada masalah,
+      dan yang akan selalu milih Azeee lagi dan lagi disetiap hari nya.<span><3</span><br><br>
+      Eummmm.... Jadi… gimana? <span>Azeee mau ngga jadi pacarku?</span> 😁
+    </p>
+    <div class="btns">
+      <button class="yes">Iyaaaa, aku mauuuuu 💞</button>
+      <button class="no">Gakkkk</button>
+    </div>
+    <div class="tease"></div>
+  </div>`;
+  
+  const no=stage.querySelector('.no'),tease=stage.querySelector('.tease');
+  const flee=e=>{e&&e.preventDefault();
+    const r=no.getBoundingClientRect();
+    if(!no.classList.contains('run')){
+      no.style.width=r.width+'px';
+      no.style.height=r.height+'px';
+      no.classList.add('run');
+      document.body.appendChild(no);
+    }
+    no.style.left=Math.max(10,Math.random()*(innerWidth-r.width-20))+'px';
+    no.style.top=Math.max(10,Math.random()*(innerHeight-r.height-20))+'px';
+    if(tease) tease.textContent="Tombol ini emang nggak dibuat buat diklik WLEEEEKKKK 😚";
+  };
+  no.addEventListener('mouseover',flee);
+  no.addEventListener('touchstart',flee,{passive:false});
+  no.addEventListener('click',flee);
+  
+  stage.querySelector('.yes').onclick=()=>{
+    if(no.classList.contains('run')) no.remove();
+    burst(70);
+    stage.innerHTML=`<div class="card">
+      <div class="step">Resmi 🎉</div>
+      <h1>Yeayyy… KITA JADIAN YAHHH MULAI SSEKARANGGG! 💑</h1>
+      <p class="sub">Mulai hari ini, Azeee resmi jadi pacar akuuuuu.<br>Makasih udah klik iyaaa walaupun maksa dikit xixiiii:> — aku bakal jaga Azeee sebaik-like dan ajak Azeee keduniaku yang isinya berkeliling melihat banyak keindahan di dunia ini,
+        aku juga bakal buat suatu website untuk taruh semua foto-foto kita nanti, ketika aku bawa Azeee ke tempat-tempat yang indah di luar sana.❤️</p>
+      <p class="sub" style="font-size:.85rem">Pokoknya aku mau Azeee bawa aku kedunianya Azeee, dan aku bawa Azeee keduniaku, nggaaa ada yang namanya sendiri-sendiri, karena aku mau tahu lebih banyak tentang Azeee CEKUTTTT. love for you Azeee<3</p>
+      <p class="sub" style="font-size:.85rem">Jangan lupa screenshot ya, ini bukti sah ya ahahah😆</p>
+    </div>`;
+    setInterval(()=>burst(6),700);
+  };
+}
+
+function burst(n){
+  const e=["❤️","💗","💖","💕","🌹","✨"];
+  for(let k=0;k<n;k++){
+    const h=document.createElement('div');
+    h.className='heart';h.textContent=e[Math.floor(Math.random()*e.length)];
+    h.style.left=Math.random()*95+'vw';h.style.top='100vh';
+    h.style.animationDuration=(3+Math.random()*3)+'s';
+    h.style.fontSize=(16+Math.random()*22)+'px';
+    document.body.appendChild(h);
+    setTimeout(()=>h.remove(),6500);
+  }
+}
+render();
+setInterval(()=>burst(3),1400);
+</script>
+</body>
+</html>
